@@ -11,7 +11,7 @@ A simple spring-boot aplication that returns a list of user's repositories.
 ## Technologies
 
 - **Java 25**  
-- **Spring Boot 4**  
+- **Spring Boot 4.0.1**  
 - **RestClient** for API communication  
 - **JUnit 5 & WireMock** for testing 
 
@@ -44,16 +44,16 @@ A simple spring-boot aplication that returns a list of user's repositories.
 ```json
 [
   {
-    "repositoryName": "repo-name",
+    "repoName": "repo-name",
     "ownerLogin": "user123",
     "branches": [
       {
         "name": "main",
-        "lastCommitSha": "123"
+        "lastSha": "123"
       },
       {
         "name": "dev",
-        "lastCommitSha": "456"
+        "lastSha": "456"
       }
     ]
   }
@@ -75,3 +75,4 @@ For non-existent users, the API will return a *404* response.
 ```
 ./gradlew test
 ```
+
