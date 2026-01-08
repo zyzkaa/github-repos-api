@@ -35,10 +35,11 @@ public class RepoListService {
 
         if (repos == null || repos.isEmpty()) return new ArrayList<>();
 
-        List<CompletableFuture<ResponseDto>> futures = repos
-                .stream()
-                .filter(r -> !r.fork())
-                .map(r -> CompletableFuture.supplyAsync(() -> {
+        try (ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor()) {
+            List<CompletableFuture<ResponseDto>> futures = repos
+                    .stream()
+                    .filter(r -> !r.fork())
+                    .map(r -> CompletableFuture.supplyAsync(() -> {
                         var branches = restClient
                                 .get()
                                 .uri(r.branchesUrl().replace("{/branch}", ""))
@@ -59,12 +60,15 @@ public class RepoListService {
                                 r.owner().login(),
                                 branches
                         );
-                    }))
-                .toList();
+                    }, executorService))
+                    .toList();
 
-        return futures.stream()
-                .map(CompletableFuture::join)
-                .toList();
+            return futures.stream()
+                    .map(CompletableFuture::join)
+                    .toList();
+        }
+
+
     }
 }
 
