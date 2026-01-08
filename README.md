@@ -1,4 +1,4 @@
-# list-users-repos-api
+# github-repos-api
 
 A simple spring-boot aplication that returns a list of user's repositories.
 
@@ -75,4 +75,5 @@ For non-existent users, the API will return a *404* response.
 ```
 ./gradlew test
 ```
+
 
